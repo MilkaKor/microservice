@@ -1,0 +1,146 @@
+@startuml
+class com.courseproject.demo.dtos.FileDto {
+- Integer id
+- EventFileDto event
+- String name
++ <<Create>> FileDto(Integer,EventFileDto,String)
++ Integer getId()
++ EventFileDto getEvent()
++ String getName()
++ boolean equals(Object)
++ int hashCode()
++ String toString()
+}
+
+
+interface com.courseproject.demo.repositories.FileRepository {
+~ List<File> findByName(String)
+}
+
+class com.courseproject.demo.dtos.UserDto {
+- Integer id
+- String login
+- String password
++ <<Create>> UserDto(Integer,String,String)
++ Integer getId()
++ String getLogin()
++ String getPassword()
++ boolean equals(Object)
++ int hashCode()
++ String toString()
+}
+
+
+class com.courseproject.demo.dtos.EventDto {
+- Integer id
+- String name
+- String description
+- Set<FileEventDto> files
++ <<Create>> EventDto(Integer,String,String,Set<FileEventDto>)
++ Integer getId()
++ String getName()
++ String getDescription()
++ Set<FileEventDto> getFiles()
++ boolean equals(Object)
++ int hashCode()
++ String toString()
+}
+
+
+
+class com.courseproject.demo.entities.Event {
+- Integer id
+- String name
+- String description
+- Set<File> files
++ Integer getId()
++ void setId(Integer)
++ String getName()
++ void setName(String)
++ String getDescription()
++ void setDescription(String)
++ Set<File> getFiles()
++ void setFiles(Set<File>)
+}
+
+
+interface com.courseproject.demo.repositories.EventRepository {
+~ List<Event> findByNameIgnoreCase(String)
+~ List<Event> findByName(String)
+~ Optional<Event> findById(Integer)
+~ long removeById(Integer)
+}
+
+
+
+class com.courseproject.demo.dtos.EventFileDto {
+- Integer id
+- String name
+- String description
++ <<Create>> EventFileDto(Integer,String,String)
++ Integer getId()
++ String getName()
++ String getDescription()
++ boolean equals(Object)
++ int hashCode()
++ String toString()
+}
+
+
+interface com.courseproject.demo.repositories.UserRepository {
+~ User findByLogin(String)
+~ User findByLoginAndPassword(String,String)
+}
+
+
+class com.courseproject.demo.entities.User {
+- Integer id
+- String login
+- String password
++ Collection<? extends GrantedAuthority> getAuthorities()
++ String getPassword()
++ String getUsername()
++ boolean isAccountNonExpired()
++ boolean isAccountNonLocked()
++ boolean isCredentialsNonExpired()
++ boolean isEnabled()
++ void setLogin(String)
++ void setPassword(String)
+}
+
+
+class com.courseproject.demo.entities.File {
+- Integer id
+- Event event
+- String name
++ String getName()
++ void setName(String)
++ Integer getId()
++ void setId(Integer)
++ Event getEvent()
++ void setEvent(Event)
+}
+
+
+class com.courseproject.demo.dtos.FileEventDto {
+- Integer id
+- String name
++ <<Create>> FileEventDto(Integer,String)
++ Integer getId()
++ String getName()
++ boolean equals(Object)
++ int hashCode()
++ String toString()
+}
+
+java.io.Serializable <|.. com.courseproject.demo.dtos.FileDto
+org.springframework.data.jpa.repository.JpaRepository <|-- com.courseproject.demo.repositories.FileRepository
+java.io.Serializable <|.. com.courseproject.demo.dtos.UserDto
+java.io.Serializable <|.. com.courseproject.demo.dtos.EventDto
+org.springframework.web.filter.OncePerRequestFilter <|-- com.courseproject.demo.configs.JwtAuthenticationFilter
+org.springframework.data.jpa.repository.JpaRepository <|-- com.courseproject.demo.repositories.EventRepository
+java.io.Serializable <|.. com.courseproject.demo.dtos.EventFileDto
+org.springframework.data.jpa.repository.JpaRepository <|-- com.courseproject.demo.repositories.UserRepository
+org.springframework.security.core.userdetails.UserDetails <|.. com.courseproject.demo.entities.User
+java.io.Serializable <|.. com.courseproject.demo.dtos.FileEventDto
+@enduml

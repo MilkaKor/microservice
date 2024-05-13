@@ -1,0 +1,52 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Event {
+  + Event(): 
+  - name: String
+  - description: String
+  - files: Set<File>
+  - id: Integer
+  + setId(Integer): void
+  + setName(String): void
+  + getId(): Integer
+  + setDescription(String): void
+  + setFiles(Set<File>): void
+  + getName(): String
+  + getDescription(): String
+  + getFiles(): Set<File>
+}
+class File {
+  + File(): 
+  - event: Event
+  - id: Integer
+  - name: String
+  + getName(): String
+  + getEvent(): Event
+  + setName(String): void
+  + getId(): Integer
+  + setId(Integer): void
+  + setEvent(Event): void
+}
+class User {
+  + User(): 
+  - login: String
+  - id: Integer
+  - password: String
+  + isAccountNonExpired(): boolean
+  + setPassword(String): void
+  + getAuthorities(): Collection<GrantedAuthority>
+  + isCredentialsNonExpired(): boolean
+  + getPassword(): String
+  + getUsername(): String
+  + setLogin(String): void
+  + isEnabled(): boolean
+  + isAccountNonLocked(): boolean
+}
+
+Event "1" *-[#595959,plain]-> "files\n*" File  
+File  "1" *-[#595959,plain]-> "event\n1" Event 
+@enduml
